@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Top menu item -->  
+    <!-- Crea el menu -->
+	<menuitem name="Jutti" id="menu_jutti" sequence="49" web_icon="jutti,static/description/icon.png"/>
+    <!-- Este menuitem apareixerà dalt, serà el nom del nostre mòdul. El valor de la seqüència farà que s'ordene davant o darrere (més a la esquerra o a la dreta) dels altres noms de móduls. -->
+    <!-- Opcions de menú que apareixeran al costat dret, quan polsem el menú de dalt 
+    Els ordenem pel sequence i li indiquem que el parent es el id del menú al que volem fer referència
+    -->
+ 
+
+	<menuitem name="Clients" id="menu_jutti_diseñador" sequence="50" parent="menu_jutti"/>
+
+    <menuitem name="Products" id="menu_jutti_products" sequence="51" parent="menu_jutti"/>
+
+    <menuitem name="Materials" id="menu_jutti_materials" sequence="51" parent="menu_jutti"/>
+
+    <menuitem name="Pedidos" id="menu_jutti_pedidos" sequence="51" parent="menu_jutti"/>
+
+	<!--Client management-->
+    
+    <!--New Client-->
+    <!-- Aquí creem la vista que volem mostrar -->
+     <record model="ir.ui.view" id="view_jutti_diseñador_form"> <!-- Model vista - el id tindrà view_nombreModulo_nombreTabla_form-->
+        <field name="name">jutti.diseñador.form</field> <!-- nom que posem al model. Serà modul.nomTaula.form -->
+        <field name="model">jutti.diseñador</field> <!-- Nom de la taula a la que fem referencia (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="type">form</field> <!-- Tipus formulari -->
+        <field name="arch" type="xml"> <!-- Tipus xml -->
+            <form string="jutti_diseñador"> <!-- nom del formulari -> nom de la taula -->
+                <!-- Camps que volem mostrar (han de tenir el mateix nom que a la taula)-->
+                <group>
+                    <field name="name"/>
+                    <field name="nif"/>
+                    <field name="address"/>
+                    <field name="city"/>
+                    <field name="tel"/>
+                    <field name="country"/>
+                    <field name="zip"/>
+                </group>
+                <!--<label name="Cliente Id:"/>-->
+            </form>
+        </field>
+    </record>
+    <!-- Aquí creem l'acció que volem que s'execute (al següent apartat indicarem on volem que s'aplique aquesta acció) -->
+    <record model="ir.actions.act_window" id="action_jutti_diseñador_form"><!-- Model activar una finestra - el id tindrà action_nombreModulo_nombreTabla_form-->
+        <field name="name">action.jutti.diseñador.form</field> <!-- nom que posem al model. Será action.modulo.nombreTabla.form -->
+        <field name="res_model">jutti.diseñador</field> <!-- Nom de la taula a la que fem referència (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="view_mode">form</field> <!-- Vista formulari -->
+        <field name="view_id" ref="view_jutti_diseñador_form"/> <!-- Aquesta acció mostrarà la vista que li indiquem a ref -->
+    </record>
+    <!-- Aquesta última part unim l'acció que hem creat amb la opció del mòdul que volem que l'utilitze. 
+    Crea una opció de menú que es diu new categories, on el seu parent és el menú de film category, li indica un identificador i per últim l'acció a la que fa referència que és la que hem definit dalt.
+    -->
+    <menuitem name="Nuevo Diseñador" parent="menu_jutti_diseñador" id="menu_jutti_diseñador_form" action="action_jutti_diseñador_form" />
+    
+
+    <!-- Aquí anem a crear un altre tipus de vista, per tant en principi la definició serà igual excepte el que es comentarà mes avall -->
+         <!--Tree Category--> 
+        <record model="ir.ui.view" id="view_jutti_diseñador_tree"> <!-- Posarem tree en compte de form -->
+            <field name="name">jutti.diseñador.tree</field> <!-- Aquí també posarem form -->
+            <field name="model">jutti.diseñador</field>
+            <field name="arch" type="xml">
+                <tree string="Cliente Tree"> <!-- nom del arbre -->
+                    <field name="name"/>
+                    <field name="nif"/>
+                    <field name="address"/>
+                    <field name="city"/>
+                    <field name="tel"/>
+                    <field name="country"/>
+                    <field name="zip"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+    <!--Search Client-->
+    <!-- Aquí creem una nova vista que no tindra camps com les d'abans, en el action li direm quines vistes volem que es puguen mostra, a aquesta vista la cridarem amb l'acció que tenim avall -->
+    <record id="view_jutti_diseñador_search" model="ir.ui.view">
+            <field name='name'>jutti.diseñador.search</field>
+            <field name='model'>jutti.diseñador</field>
+            <field name='arch' type='xml'>
+                <search string="Diseñador search">
+                </search>
+            </field>
+    </record>
+    <!-- Aquest es l'action que crida a la vista que tenim dalt, si us fixeu al camp view_mode, podem veure que tenim "tree,form", això vol dir, que podrem veure els dos tipus de vista del model que tenim deifinit a la línia de dalt (res_model = nom de la taula). -->
+        <record model="ir.actions.act_window" id="action_jutti_diseñador_search">
+            <field name="name">Searching Diseñador</field>
+            <field name="res_model">jutti.diseñador</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_jutti_diseñador_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a Client.
+                </p>
+            </field>
+        </record>
+    <menuitem name="Buscar diseñador" parent="menu_jutti_diseñador" id="menu_jutti_diseñador_search" action="action_jutti_diseñador_search"/>
+
+    <!--New Product-->
+    <!-- Aquí creem la vista que volem mostrar -->
+     <record model="ir.ui.view" id="view_jutti_products_form"> <!-- Model vista - el id tindrà view_nombreModulo_nombreTabla_form-->
+        <field name="name">jutti.products.form</field> <!-- nom que posem al model. Serà modul.nomTaula.form -->
+        <field name="model">jutti.products</field> <!-- Nom de la taula a la que fem referencia (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="type">form</field> <!-- Tipus formulari -->
+        <field name="arch" type="xml"> <!-- Tipus xml -->
+            <form string="jutti_prtoducts"> <!-- nom del formulari -> nom de la taula -->
+                <!-- Camps que volem mostrar (han de tenir el mateix nom que a la taula)-->
+                <group>
+                    <field name="name"/>
+                    <field name="stock"/>
+                    <field name="price"/>
+                    <field name="manufacturating_date"/>
+                    <field name="description"/>
+                    <field name="talla"/>
+                    <field name="material_name"/>
+                    <field name="color_id"/>
+                    <field name="suela_name"/>
+                    <field name="tipology_id"/>
+                </group>
+                <!--<label name="Cliente Id:"/>-->
+            </form>
+        </field>
+    </record>
+
+    <!-- Aquí creem l'acció que volem que s'execute (al següent apartat indicarem on volem que s'aplique aquesta acció) -->
+    <record model="ir.actions.act_window" id="action_jutti_products_form"><!-- Model activar una finestra - el id tindrà action_nombreModulo_nombreTabla_form-->
+        <field name="name">action.jutti.products.form</field> <!-- nom que posem al model. Será action.modulo.nombreTabla.form -->
+        <field name="res_model">jutti.products</field> <!-- Nom de la taula a la que fem referència (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="view_mode">form</field> <!-- Vista formulari -->
+        <field name="view_id" ref="view_jutti_products_form"/> <!-- Aquesta acció mostrarà la vista que li indiquem a ref -->
+    </record>
+    <!-- Aquesta última part unim l'acció que hem creat amb la opció del mòdul que volem que l'utilitze.
+    Crea una opció de menú que es diu new categories, on el seu parent és el menú de film category, li indica un identificador i per últim l'acció a la que fa referència que és la que hem definit dalt.
+    -->
+    <menuitem name="Make Product" parent="menu_jutti_products" id="menu_jutti_products_form" action="action_jutti_products_form" />
+
+
+    <!-- Aquí anem a crear un altre tipus de vista, per tant en principi la definició serà igual excepte el que es comentarà mes avall -->
+         <!--Tree Category-->
+        <record model="ir.ui.view" id="view_jutti_products_tree"> <!-- Posarem tree en compte de form -->
+            <field name="name">jutti.products.tree</field> <!-- Aquí també posarem form -->
+            <field name="model">jutti.products</field>
+            <field name="arch" type="xml">
+                <tree string="Product Tree"> <!-- nom del arbre -->
+                    <field name="name"/>
+                    <field name="stock"/>
+                    <field name="price"/>
+                    <field name="manufacturating_date"/>
+                    <field name="description"/>
+                    <field name="talla"/>
+                    <field name="material_name"/>
+                    <field name="color_id"/>
+                    <field name="suela_name"/>
+                    <field name="tipology_id"/>
+                </tree>
+            </field>
+        </record>
+
+    <!--Search Product-->
+    <!-- Aquí creem una nova vista que no tindra camps com les d'abans, en el action li direm quines vistes volem que es puguen mostra, a aquesta vista la cridarem amb l'acció que tenim avall -->
+    <record id="view_jutti_products_search" model="ir.ui.view">
+            <field name='name'>jutti.products.search</field>
+            <field name='model'>jutti.products</field>
+            <field name='type'>search</field>
+            <field name='arch' type='xml'>
+                <search string="Product search">
+                </search>
+            </field>
+    </record>
+<!--      GRAPHIC-->
+<!--    <record id="products.analytic_view_graph" model="ir.ui.view">-->
+<!--        <field name="name">products.analytic_view_graph</field>-->
+<!--        <field name="model">jutti.products</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <graph string="User graph">-->
+<!--                <field name="name" type="dimension"/>-->
+<!--                <field name="price" type="measure"/>-->
+<!--            </graph>-->
+<!--        </field>-->
+<!--    </record>-->
+    <!-- Aquest es l'action que crida a la vista que tenim dalt, si us fixeu al camp view_mode, podem veure que tenim "tree,form", això vol dir, que podrem veure els dos tipus de vista del model que tenim deifinit a la línia de dalt (res_model = nom de la taula). -->
+        <record model="ir.actions.act_window" id="action_jutti_products_search">
+            <field name="name">Searching products</field>
+            <field name="res_model">jutti.products</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="search_view_id" ref="view_jutti_products_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a Product.
+                </p>
+            </field>
+        </record>
+    <menuitem name="Search Products" parent="menu_jutti_products" id="menu_jutti_products_search" action="action_jutti_products_search"/>
+
+  <!--==================================================================================================================================================================
+  ===============================================================================================-->
+    <!--New Material-->
+    <!-- Aquí creem la vista que volem mostrar -->
+     <record model="ir.ui.view" id="view_jutti_materials_form"> <!-- Model vista - el id tindrà view_nombreModulo_nombreTabla_form-->
+        <field name="name">jutti.materials.form</field> <!-- nom que posem al model. Serà modul.nomTaula.form -->
+        <field name="model">jutti.materials</field> <!-- Nom de la taula a la que fem referencia (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="type">form</field> <!-- Tipus formulari -->
+        <field name="arch" type="xml"> <!-- Tipus xml -->
+            <form string="jutti_materials"> <!-- nom del formulari -> nom de la taula -->
+                <!-- Camps que volem mostrar (han de tenir el mateix nom que a la taula)-->
+                <group>
+                    <field name="name"/>
+                    <field name="quantity"/>
+                    <field name="material_type"/>
+                </group>
+                <!--<label name="Cliente Id:"/>-->
+            </form>
+        </field>
+    </record>
+
+    <!-- Aquí creem l'acció que volem que s'execute (al següent apartat indicarem on volem que s'aplique aquesta acció) -->
+    <record model="ir.actions.act_window" id="action_jutti_materials_form"><!-- Model activar una finestra - el id tindrà action_nombreModulo_nombreTabla_form-->
+        <field name="name">action.jutti.materials.form</field> <!-- nom que posem al model. Será action.modulo.nombreTabla.form -->
+        <field name="res_model">jutti.materials</field> <!-- Nom de la taula a la que fem referència (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="view_mode">form</field> <!-- Vista formulari -->
+        <field name="view_id" ref="view_jutti_materials_form"/> <!-- Aquesta acció mostrarà la vista que li indiquem a ref -->
+    </record>
+    <!-- Aquesta última part unim l'acció que hem creat amb la opció del mòdul que volem que l'utilitze.
+    Crea una opció de menú que es diu new categories, on el seu parent és el menú de film category, li indica un identificador i per últim l'acció a la que fa referència que és la que hem definit dalt.
+    -->
+    <menuitem name="New Material" parent="menu_jutti_materials" id="menu_jutti_materials_form" action="action_jutti_materials_form" />
+
+
+    <!-- Aquí anem a crear un altre tipus de vista, per tant en principi la definició serà igual excepte el que es comentarà mes avall -->
+         <!--Tree Category-->
+        <record model="ir.ui.view" id="view_jutti_materials_tree"> <!-- Posarem tree en compte de form -->
+            <field name="name">jutti.materials.tree</field> <!-- Aquí també posarem form -->
+            <field name="model">jutti.materials</field>
+            <field name="arch" type="xml">
+                <tree string="Material Tree"> <!-- nom del arbre -->
+                    <field name="name"/>
+                    <field name="quantity"/>
+                    <field name="material_type"/>
+                </tree>
+            </field>
+        </record>
+
+    <!--Search Material-->
+    <!-- Aquí creem una nova vista que no tindra camps com les d'abans, en el action li direm quines vistes volem que es puguen mostra, a aquesta vista la cridarem amb l'acció que tenim avall -->
+    <record id="view_jutti_materials_search" model="ir.ui.view">
+            <field name='name'>jutti.materials.search</field>
+            <field name='model'>jutti.materials</field>
+            <field name='arch' type='xml'>
+                <search string="Material search">
+                </search>
+            </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="action_jutti_materials_search">
+            <field name="name">Searching materials</field>
+            <field name="res_model">jutti.materials</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_jutti_materials_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a Material.
+                </p>
+            </field>
+        </record>
+    <menuitem name="Search Materials" parent="menu_jutti_materials" id="menu_jutti_materials_search" action="action_jutti_materials_search"/>
+
+    <!-- Vista del formulario de pedidos -->
+
+<!--    New Pedido-->
+    <record model="ir.ui.view" id="view_jutti_pedidos_form"> <!-- Model vista - el id tindrà view_nombreModulo_nombreTabla_form-->
+        <field name="name">jutti.pedidos.form</field> <!-- nom que posem al model. Serà modul.nomTaula.form -->
+        <field name="model">jutti.pedidos</field> <!-- Nom de la taula a la que fem referencia (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="type">form</field> <!-- Tipus formulari -->
+        <field name="arch" type="xml"> <!-- Tipus xml -->
+            <form string="jutti_pedidos"> <!-- nom del formulari -> nom de la taula -->
+                <!-- Camps que volem mostrar (han de tenir el mateix nom que a la taula)-->
+                <group>
+                    <field name="fecha_pedido"/>
+                    <field name="cliente_name"/>
+                    <field name="producto_name"/>
+                    <field name="cantidad"/>
+
+                </group>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Aquí creem l'acció que volem que s'execute (al següent apartat indicarem on volem que s'aplique aquesta acció) -->
+    <record model="ir.actions.act_window" id="action_jutti_pedidos_form"><!-- Model activar una finestra - el id tindrà action_nombreModulo_nombreTabla_form-->
+        <field name="name">action.jutti.pedidos.form</field> <!-- nom que posem al model. Será action.modulo.nombreTabla.form -->
+        <field name="res_model">jutti.pedidos</field> <!-- Nom de la taula a la que fem referència (recordeu que sempre els noms de les taules porten el nom del modul) -->
+        <field name="view_mode">form</field> <!-- Vista formulari -->
+        <field name="view_id" ref="view_jutti_pedidos_form"/> <!-- Aquesta acció mostrarà la vista que li indiquem a ref -->
+    </record>
+
+    <menuitem name="New Order" parent="menu_jutti_pedidos" id="menu_jutti_pedidos_form" action="action_jutti_pedidos_form" />
+
+    <record model="ir.ui.view" id="view_jutti_pedidos_tree"> <!-- Posarem tree en compte de form -->
+            <field name="name">jutti.pedidos.tree</field> <!-- Aquí també posarem form -->
+            <field name="model">jutti.pedidos</field>
+            <field name="arch" type="xml">
+                <tree string="Pedido Tree"> <!-- nom del arbre -->
+                    <field name="fecha_pedido"/>
+                    <field name="cliente_name"/>
+                    <field name="producto_name"/>
+                    <field name="cantidad"/>
+                    <field name="precio_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Search Pedido-->
+    <!-- Aquí creem una nova vista que no tindra camps com les d'abans, en el action li direm quines vistes volem que es puguen mostra, a aquesta vista la cridarem amb l'acció que tenim avall -->
+    <record id="view_jutti_pedidos_search" model="ir.ui.view">
+            <field name='name'>jutti.pedidos.search</field>
+            <field name='model'>jutti.pedidos</field>
+            <field name='arch' type='xml'>
+                <search string="Pedido search">
+                </search>
+            </field>
+    </record>
+    <!-- Aquest es l'action que crida a la vista que tenim dalt, si us fixeu al camp view_mode, podem veure que tenim "tree,form", això vol dir, que podrem veure els dos tipus de vista del model que tenim deifinit a la línia de dalt (res_model = nom de la taula). -->
+        <record model="ir.actions.act_window" id="action_jutti_pedidos_search">
+            <field name="name">Searching pedidos</field>
+            <field name="res_model">jutti.pedidos</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_jutti_pedidos_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new Order.
+                </p>
+            </field>
+        </record>
+    <menuitem name="Search Order" parent="menu_jutti_pedidos" id="menu_jutti_pedidos_search" action="action_jutti_pedidos_search"/>
+
+</odoo>
